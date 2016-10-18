@@ -77,8 +77,8 @@ app.post('/jobSearch',function(req,res){
 			res.send("Error in establishing connection");
 		}
 		else{
-			if (jobs.place == ""){
-				var cursor = db.collection('jobs').find({"job":jobs.job});
+			if (jobs.place == "" && jobs.job==""){
+				var cursor = db.collection('jobs').find({});
 				cursor.forEach(function(doc,err){
 				if(err){
 					console.log(err);
@@ -103,7 +103,20 @@ app.post('/jobSearch',function(req,res){
 					res.redirect('/')
 					//res.send(jobsArray);
 				});
-			}else {
+			}else if(jobs.place==""){
+				var cursor = db.collection('jobs').find({"job":jobs.job});
+				cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					jobsArray.push(doc);
+				}
+				},function(){
+					searchresults = "Search results "+jobsArray.length;
+					res.redirect('/')
+					//res.send(jobsArray);
+				});
+			}else  {
 				var cursor = db.collection('jobs').find(jobs);
 				cursor.forEach(function(doc,err){
 				if(err){
