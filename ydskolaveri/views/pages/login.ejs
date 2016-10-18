@@ -1,0 +1,12 @@
+<%-contentFor('hero')%>
+
+<form method="POST" action="/login">
+<h2 id="log"></h2>
+<h1><%= message %></h1>
+Username:<br>
+	<input type="text" name="username"><br>
+Password:<br>
+	<input type="text" name="password"><br>
+	<input type="submit" value = "login">
+</form>
+<a href="/register">Join now</a>

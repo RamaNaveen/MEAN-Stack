@@ -1,0 +1,14 @@
+<%-contentFor('hero')%>
+<form method="POST" action="/register">
+<h1><%= alreadyMessage %></h1>
+Name:<br>
+	<input type="text" name="username" ><br>
+Password:<br>
+	<input type="Password" name="password" ><br>
+Email: <br>
+	<input type="text" name = "email" ><br>
+<input type="submit" value="Register" >
+</form>
+<a href="/forgotpassword">Forgot password?</a>
+
+

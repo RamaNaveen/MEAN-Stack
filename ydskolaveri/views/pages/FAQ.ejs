@@ -1,0 +1,9 @@
+<%-contentFor('hero')%>
+<ol>
+<% for(var i=0;i<faqArray.length;i++){ %>
+
+<b><li><%= faqArray[i].question%></li></b>
+
+<%= faqArray[i].answer%>
+<%}%>
+</ol>
