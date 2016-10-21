@@ -1,10 +1,12 @@
 
 <%-contentFor('hero')%>
+<section class = "hero">
 <form method = "POST" action="/jobSearch">
 <input type="text" name="jobs" placeholder="jobs">
 <input type="text" name="place" placeholder="place">
 <input type="submit" value="Submit">
 </form>
+</section>
 <%= searchresults%> 
 <% for(var i = 0;i<jobsArray.length;i++){%>
 <fieldset>
