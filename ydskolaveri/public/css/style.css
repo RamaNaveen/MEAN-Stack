@@ -1,6 +1,183 @@
-footer{
-	background-color: black
+
+html, body {
+    height: 100%;
+    margin: 0;
+    
 }
-header{
+.navbar { margin-bottom:0px !important; }
+#quote{
+	margin-top:0px !important;
+	top: 50%;
+	position: relative;
 	color: white
 }
+#uname{
+	margin: 5%;
+	margin-right: 5%;
+	width:90%;
+	border-radius: 7px;
+	height: 40px;
+}
+#fp{
+	margin: 5%;
+}
+#error{
+	margin: 5%;
+	color: red;
+}
+
+#pass{
+	margin: 5%;
+	margin-right: 5%;
+	width:90%;
+	border-radius: 7px;
+	height: 40px;
+}
+
+#lgnBTN{
+	margin: 5%;
+	margin-right: 5%;
+	width:90%;
+	background-color: #00cc44;
+	color: white;
+	border-radius: 7px;
+	height: 40px;
+}
+#asd{
+
+    width: 100%;
+    height: 65%;
+    border: 0px solid black;
+    margin: 0;
+    background-image: url("../images/buildings.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%,100%;
+     margin-top:0px !important;
+     margin-bottom:0px !important;
+}
+#csimg{
+	width: 25%;
+	height: 90%;
+	float: left;
+	margin: 1%;
+	align-content: right;
+}
+#cfimg{
+	height:90%;
+	width:95%;
+	align-content: right;
+}
+#ab{
+    margin-top: 1%;
+    width: 90%;
+    height: 35%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#heading{
+	margin-top:  10%;
+	margin-left: 35%;
+}
+#heading1{
+	margin-top:  5%;
+	margin-left: 25%;
+}
+#heading2{
+	margin-top:  5%;
+	margin-left: 45%;
+}
+
+#about{
+	width: 70%;
+    height: 100%;
+    float: left;
+    margin: 1%
+}
+#left {
+    width:25%;
+    margin-top: 5%;
+    margin-right: 12%;
+    margin-left: 1%;
+    height: 100%;
+    float:left;
+    border: solid 1px #C0C0C0 ;
+    border-radius: 7px;
+
+}
+#login{
+    margin-top:0px !important;
+
+}
+#login1{
+	margin-left: 35%;
+    margin-right: 35%;
+
+	width: 30%;
+	height: 80%;
+
+}
+
+#center {
+    width: 25%;
+    margin-right: 12%;
+    margin-top: 5%;
+    height: 100%;
+    float: left;
+    border: solid 1px #C0C0C0 ;
+    border-radius: 7px;
+}
+#right {
+    margin-top: 5%;
+    width: 25%;
+    height: 100%;
+    float: left;
+    border: solid 1px #C0C0C0 ;
+    border-radius: 7px;
+}
+
+#top1{
+    width: 100%;
+    height: 30%;
+    margin-top: 5%;
+    margin-bottom: 1%
+}
+#top2{
+    width: 100%;
+    height: 30%;
+    margin: 1%
+}
+#top3{
+    width: 100%;
+    height: 30%;
+    margin: 1%
+}
+
+
+#side {
+    margin-top: 1%;
+    width: 90%;
+    height: 75%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#down{
+    margin-top: 1%;
+    width: 90%;
+    height: 50%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+a{
+    color: black
+}
+
+
+
+
+
+
+
+
+
+

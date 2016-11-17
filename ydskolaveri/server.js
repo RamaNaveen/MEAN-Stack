@@ -20,30 +20,63 @@ var jobsArray = []
 var alreadyMessage = "";
 var message = "";
 var searchresults = "";
+var a,e,f
+var b
+var c
+var d
 app.get('/', function(req,res){
-	res.render("home",{jobsArray,searchresults});
+	b = ""
+	c = ""
+	d = ""
+	a = "active";
+	e = "";
+	f = "";
+	res.render("home1",{jobsArray,searchresults,a,b,c,d,e,f});
 	jobsArray = [];
 	searchresults = ""
 });
 
 app.get('/register',function(req,res){
-	res.render('register',{alreadyMessage});
+	b = ""
+	c = ""
+	d = ""
+	a = "";
+	e = "";
+	f = "active";
+	res.render('register',{alreadyMessage,a,b,c,d,e,f});
 	alreadyMessage = "";
 	//res.render('/register')
 });
 
 app.get('/login',function(req,res){
-	res.render("login",{message});
+	b = ""
+	c = ""
+	d = ""
+	e = "active";
+	a = "";
+	f = "";
+	res.render("login",{message,a,b,c,d,e,f});
 	message = "";
 	//res.render('/register')
 });
 
 app.get('/forgotpassword',function(req,res){
-	res.render("forgotpassword");
+	b = ""
+	c = ""
+	d = ""
+	e = "active";
+	a = "";
+	f = "";
+	res.render("forgotpassword",{a,b,c,d,e,f});
 });
 
 app.get('/FAQ',function(req,res){
-
+	b = ""
+	c = ""
+	a = ""
+	d = "active";
+	e = "";
+	f = "";
 	var faqArray = [];
 	mongoClient.connect(url,function(err,db){
 		if (err){
@@ -58,7 +91,7 @@ app.get('/FAQ',function(req,res){
 					faqArray.push(doc)
 				}
 			},function(){
-				res.render('FAQ',{faqArray});
+				res.render('FAQ',{faqArray,a,b,c,d,e,f});
 			});
 		}
 	});

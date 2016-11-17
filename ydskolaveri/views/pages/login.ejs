@@ -1,18 +1,26 @@
+
 <%-contentFor('herohead')%>
 
 <title>Login</title>
 
 <%-contentFor('hero')%>
 
-<form method="POST" action="/login">
-<h2 id="log"></h2>
-<h1><%= message %></h1>
-<span id="g">Username:</span><br>
-	<input type="text" name="username"><br>
-Password:<br>
-	<input type="text" name="password"><br>
-	<input type="submit" value = "login">
-</form>
-<img src="images/CrowdFunding.png" alt="Smiley face">
+<div id="login">
+<div id= "login1">
 
-<a href="/register">Join now</a>
+
+<form method="POST" action="/login">
+
+<h1><span id="heading">Log In</h1>
+                   <input type="text" name="username" id="uname" placeholder="Email">
+                <br>
+                    <input type="text" name="password" id="pass" placeholder="Password">
+                <br>
+                <a href="/forgotpassword" id="fp">Forgot password?</a>
+                    <input type="submit" value = "Log me in!" id="lgnBTN">
+                
+</form>
+<hr>
+<span id="heading1">New to Your Contribution please?</span><br> <a href="/register" id="heading2">Sign Up</a>
+</div>
+</div>
