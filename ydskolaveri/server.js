@@ -2,19 +2,22 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var fs = require('fs');
+var multer = require('multer');
 var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+var layout = require('express-ejs-layouts');
 var router = express.Router();
 var mongo = require('mongodb');
-var expressLayouts = require('express-ejs-layouts');
 var mongoClient = mongo.MongoClient;
 app.use(express.static(__dirname+'/public'));
 app.set('view engine','ejs');
-app.use(expressLayouts);
+app.use(layout);
 app.set('views', path.join(__dirname, '/views/pages'));
-
+var upload = multer({dest:'/public/uploads/'})
+var userrole = [];
+var resultArray = [];
 var url = 'mongodb://localhost:27017/ydiskolaveri';
 var jobsArray = []
 var alreadyMessage = "";
@@ -23,7 +26,12 @@ var searchresults = "";
 var a,e,f
 var b
 var c
+var count = 0;
 var d
+var ObjectId = require('mongodb').ObjectID;
+var fund = 0;
+var email;
+
 app.get('/', function(req,res){
 	b = ""
 	c = ""
@@ -31,7 +39,7 @@ app.get('/', function(req,res){
 	a = "active";
 	e = "";
 	f = "";
-	res.render("home1",{jobsArray,searchresults,a,b,c,d,e,f});
+	res.render("home1",{a,b,c,d,e,f});
 	jobsArray = [];
 	searchresults = ""
 });
@@ -55,6 +63,7 @@ app.get('/login',function(req,res){
 	e = "active";
 	a = "";
 	f = "";
+	console.log(message);
 	res.render("login",{message,a,b,c,d,e,f});
 	message = "";
 	//res.render('/register')
@@ -67,7 +76,8 @@ app.get('/forgotpassword',function(req,res){
 	e = "active";
 	a = "";
 	f = "";
-	res.render("forgotpassword",{a,b,c,d,e,f});
+	res.render("forgotpassword",{a,b,c,d,e,f,message});
+	message = "";
 });
 
 app.get('/FAQ',function(req,res){
@@ -95,6 +105,153 @@ app.get('/FAQ',function(req,res){
 			});
 		}
 	});
+});
+
+app.get('/projects',function(req,res){
+	var projectsArray = [];
+	var z = req.query.category;
+	b = "active";
+	c = "";
+	a = "";
+	d = "";
+	e = "";
+	f = "";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('projects').find({"category":z,status:"approved"});
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					projectsArray.push(doc);
+				}
+			}, function(){
+				res.render('projects',{projectsArray,a,b,c,d,e,f})
+			});
+		}
+	});
+});
+app.get('/dashboard',function(req,res){
+	b = "active";
+	c = "";
+	a = "";
+	d = "";
+	e = "";
+	f = "";
+	res.render('dashboard',{a,b,c,d,e,f})
+});
+app.get('/startProject',function(req,res){
+	b = "";
+	c = "active";
+	a = "";
+	d = "";
+	e = "";
+	f = "";
+	res.render('startProject',{a,b,c,d,e,f})
+});
+app.get('/userHome',function(req,res){
+	var projectsArray = [];
+	var z = req.query.category;
+	b = "";
+	c = "";
+	a = "active";
+	d = "";
+	e = "";
+	f = "";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('projects').find({"category":z,status:"approved"});
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					projectsArray.push(doc);
+				}
+			}, function(){
+				res.render('userHome',{projectsArray,a,b,c,d,e,f})
+			});
+		}
+	});
+});
+app.get('/admin',function(req,res){
+	var projectsArray = [];
+	var z = req.query.status;
+	b = "";
+	c = "";
+	a = "active";
+	d = "";
+	e = "";
+	f = "";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('projects').find({status:z});
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					projectsArray.push(doc);
+				}
+			}, function(){
+				res.render('admin',{projectsArray,a,b,c,d,e,f})
+			});
+		}
+	});
+});
+app.post('/creditdetails',function(req,res){
+
+	console.log(fund);
+	a= "active"
+	c = ""
+	a = ""
+	d = "";
+	e = "";
+	f = "";
+	res.render('creditdetails',{a,b,c,d,e,f})
+});
+app.get('/description',function(req,res){
+	var projectdescr = []
+	var id = ObjectId(req.query.id);
+	b = "active";
+	c = "";
+	a = "";
+	d = "";
+	e = "";
+	f = "";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('projects').find({"_id":id});
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					projectdescr.push(doc);
+				}
+			}, function(){
+				console.log(projectdescr)
+				res.render('description',{projectdescr,a,b,c,d,e,f})
+			});
+		}
+	});
+});
+app.get('/addSuccessStories',function(req,res){
+	b = "active";
+	c = "";
+	a = "";
+	res.render('addSuccessStories',{a,b,c,d,e,f})
+});
+app.get('/successStories',function(req,res){
+	b = "active";
+	c = "";
+	a = "";
+	res.render('successStories',{a,b,c,d,e,f})
 });
 app.post('/jobSearch',function(req,res){
 
@@ -169,36 +326,120 @@ app.post('/jobSearch',function(req,res){
 
 });
 
+app.post('/startProjects',upload.single('image'),function(req,res){
+	var myfile = req.file;
+	var project = {
+		title:req.body.title,
+		category:req.body.category,
+		deadline:req.body.deadline,
+		funds:req.body.funds,
+		phonenumber:req.body.phonenumber,
+		address:req.body.address,
+		city:req.body.city,
+		country:req.body.country,
+		zipcode:req.body.zipcode,
+		description:req.body.description,
+		about:req.body.about,
+		status:'pending',
+		fundscollected:0,
+		image:JSON.stringify(req.file),
+	};
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("Error in establishing connection");
+			res.send("Error in establishing connection");
+		} else {
+			db.collection('projects').insert(project,function(err,result){
+				if(err){
+					console.log('error');
+				} else {
+					console.log(req.files);
+					res.render('successProject',{a,b,c,d,e,f})
+				}
+			});
+		}
+	});
+
+});
+
+app.post('/addSuccessStories',upload.single('image'),function(req,res){
+	a=""
+	b="active"
+	c=""
+	d=""
+	e=""
+	f=""
+	var story = {
+		title:req.body.title,
+		description:req.body.description,
+		about:req.body.about
+	};
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("Error in establishing connection");
+			res.send("Error in establishing connection");
+		} else {
+			db.collection('stories').insert(story,function(err,result){
+				if(err){
+					console.log('error');
+				} else {
+					console.log("req.files");
+					res.render('sucessStories',{a,b,c,d,e,f})
+				}
+			});
+		}
+	});
+
+});
+
 app.post('/login',function(req,res){
-	var login = {username:req.body.username,
+	var login = {email:req.body.username,
 		password : req.body.password
 	};
-	
+	if (req.body.username == "admin@yourcontribution.com" && req.body.password == "admin"){
+		res.redirect('/admin')
+	} else {
+
 	mongoClient.connect(url,function(err,db){
 		if (err){
 			console.log("Error in establishing connection");
 			res.send("Error in establishing connection");
 		}
 		else{
+			var cursor = db.collection('users').find(login);
+			cursor.forEach(function(doc,err){
+				if (err) {
+					console.log(err);
+				} else{
 
-			db.collection('users').count(login,function(err,count){
-				if (count != 0){
-					res.send("this is home page");
-				} else {
-					message = "username and password is wrong";
-
-					res.redirect('/login')
+					userrole.push(doc);
 				}
+			},function(){
+				db.collection('users').count(login,function(err,count){
+					
+					if (count != 0){
+						res.redirect('/userHome?category=arts')
+					} else {
+						console.log(count);
+						message = "username and password is wrong";
+
+						res.redirect('/login');
+					}
+				});
 			});
 				
 		}
+
 	});
+}
+
 });
 app.post('/register',function(req,res){
 	var newUser = {
 	username: req.body.username,
 	password: req.body.password,
-	email: req.body.email
+	email: req.body.email,
+	role: "user"
 	};
 	mongoClient.connect(url,function(err,db){
 		if (err){
@@ -220,8 +461,10 @@ app.post('/register',function(req,res){
 							
 						
 							console.log('Item Inserted');
-							
-							 res.send("Your username is "+newUser.username+" and password is "+newUser.password+" registered email is "+newUser.email+" "+number);
+							message="You are registered with "+newUser.email+" successfully";
+							 f="active";
+					res.render('success',{message,a,b,c,d,e,f});
+					message="";
 						
 						}
 						db.close();
@@ -241,28 +484,47 @@ app.post('/register',function(req,res){
 	
 });
 
-
+app.post('/description',function(req,res){
+	b = "active";
+	c = "";
+	a = "";
+	d = "";
+	e = "";
+	f = "";
+	fund = req.body.fund;
+	res.render('confirmfunding',{fund,a,b,c,d,e,f})
+});
 
 app.post('/forgotpassword',function(req,res){
-	var resultArray = [];
+
 	var forgotMail = { "email": req.body.forgotmail};
 	
 	mongoClient.connect(url,function(err,db){
 		if (err){
 			console.log('Error occured');
-		} else {
-			cursor = db.collection('users').find(forgotMail);
+		} 
+		else {
+			var cursor = db.collection('users').find(forgotMail);
 			cursor.forEach(function(doc,err){
 				if (err){
+					console.log(cursor);
 					console.log(err);
 				} else {
+					console.log("1");
 					resultArray.push(doc);
 					
 				}
 			},function(){
-				//var contents = fs.readFileSync(resultArray[0]);
-				//var jsonContent = JSON.parse(contents);
-				res.send(resultArray);
+				if (resultArray.length == 0) {
+					message = "Email doesn't exist";
+					res.redirect('/forgotpassword');
+				} else {
+
+					message = "The password is sent to your email address";
+					e="active";
+					res.render('success',{message,a,b,c,d,e,f});
+					message = "";
+				}
 				//res.send("Recieved data");
 				db.close();
 			});

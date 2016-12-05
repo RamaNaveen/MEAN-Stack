@@ -1,9 +1,12 @@
 <%-contentFor('hero')%>
+<div id="faq">
+<h1>Frequently asked quetions</h1>
 <ol>
 <% for(var i=0;i<faqArray.length;i++){ %>
 
-<b><li><%= faqArray[i].question%></li></b>
+<h3><li><%= faqArray[i].question%></li></h3>
 
 <%= faqArray[i].answer%>
 <%}%>
 </ol>
+</div>

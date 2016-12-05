@@ -10,11 +10,12 @@
 
 
 <form method="POST" action="/login">
-
 <h1><span id="heading">Log In</h1>
-                   <input type="text" name="username" id="uname" placeholder="Email">
+<span id="error"><%= message %></span>
+
+                   <input type="email" name="username" id="uname" placeholder="Email" required>
                 <br>
-                    <input type="text" name="password" id="pass" placeholder="Password">
+                    <input type="password" name="password" id="pass" placeholder="Password" required>
                 <br>
                 <a href="/forgotpassword" id="fp">Forgot password?</a>
                     <input type="submit" value = "Log me in!" id="lgnBTN">

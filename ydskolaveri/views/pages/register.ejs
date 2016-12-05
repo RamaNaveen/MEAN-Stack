@@ -2,12 +2,12 @@
 <div id="login1">
 <form method="POST" action="/register">
 
-<h1><span id="heading">Register</h1>
+<h1><span id="heading3">Register</h1>
 <span id="error"><%= alreadyMessage %></span>
-	<input type="text" name="username" id="uname" placeholder="Name">
-	<input type="text" name = "email" id="uname" placeholder="Email">
-	<input type="Password" name="password" id="uname" placeholder="Password">
-	<input type="Password" name="password" id="uname" placeholder="Re-enter Password">
+	<input type="text" name="username" id="uname" placeholder="Name" required>
+	<input type="email" name = "email" id="uname" placeholder="Email" required>
+	<input type="Password" name="password" id="uname" placeholder="Password" required>
+	<input type="Password" name="re-enterpassword" id="uname" placeholder="Re-enter Password" required>
 	
 <input type="submit" value="Register" id="lgnBTN">
 </form>

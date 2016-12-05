@@ -1,0 +1,56 @@
+<%-contentFor('hero')%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Crowd Sourcing</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <span class="navbar-brand">YourContributionPlease</span>
+    </div>
+    <ul class="nav navbar-nav">
+     <li  class=<%-a%>><a href="/userHome?category=arts"  >Home</a></li>
+       <li  class=<%-b%>><a href="/dashboard"  >My Dashboard</a></li>
+       <li  class=<%-c%>><a href="/startProject"  >Start Projects</a></li>
+      </ul>
+      <form class="navbar-form navbar-nav" role="search">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search Projects">
+    </div>
+    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+</form>
+       <ul class="nav navbar-nav navbar-right">
+       
+       <li  class=<%-d%>><a href="Register"  >Success Stores</a></li>
+       <li class=<%-e%>><a href="FAQ">FAQ</a></li>
+       <li class=<%-f%>><a  href="login">Logout</a></li>
+      
+
+    </ul>
+  </div>
+</nav>
+
+<div id="success">
+<form method='POST' action = "creditdetails">
+<h2>Are you ready to fund the amount <span name=fund><%= fund %><span></h2>
+
+<input type="submit" value ="YES">
+</form>
+<input type="submit" value ="No">
+</div>
+
+
+<footer>
+	
+</footer>
+</body>
+</html>
