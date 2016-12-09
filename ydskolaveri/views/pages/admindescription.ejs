@@ -1,0 +1,44 @@
+
+
+<%-contentFor('hero')%>
+
+
+<div id="des">
+<center><h1><%=projectdescr[projectdescr.length-1].title%></h1></center><br>
+<div id = "topdesc">
+<div id="imgdesc">
+<img src="images/<%=projectdescr[projectdescr.length-1].image%>" id="descimg" >
+</div>
+<div id="descri">
+<h4><span class="btw"><b>Fund needed:</b> <%=projectdescr[projectdescr.length-1].funds%> $</span><br><br><br></h4>
+<h4><span class="btw"><b>Funds Collected:</b> <%=projectdescr[projectdescr.length-1].fundscollected%> $</span><br><br><br></h4>
+<h4><span class="btw"><b>Deadline:</b> <%=projectdescr[projectdescr.length-1].deadline%></span><br><br><br></h4>
+
+</div>
+</div>
+<hr>
+<div>
+<p  style="text-align:justify">
+
+<%=projectdescr[projectdescr.length-1].about%>
+
+</p>
+<p>
+<b>Contact Information:</b><br>
+Phone Number: <%=projectdescr[projectdescr.length-1].phonenumber%><br>
+City: <%=projectdescr[projectdescr.length-1].city%><br>
+Address: <%=projectdescr[projectdescr.length-1].address%><br>
+
+</p>
+
+</div>
+</div>
+<form method="POST" action="admindescription">
+<input type = "submit" value ="Approve" id="yns" >
+
+</form>
+<form method="POST" action="adminreject">
+<input type="submit" value="Reject" id="nys">
+</form>
+
+

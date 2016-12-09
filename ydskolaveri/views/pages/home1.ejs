@@ -21,39 +21,43 @@ and open the template in the editor.
         </div>
         <br>
         <hr>
-        
-        <div id="side" >
+        <div id="inds" >
         <h2>Top Projects</h2>
         
-            <div id="left">
-              <img src="images/images.jpg" width="100%" height="35%" alt="img" border-radius=7px><br>
-                <a href="/">Saving pandas</a>
-            </div>
-            <div id="center">
-               <img src="images/a.jpg" width="100%" height="35%"  alt="img">
-                <br>text
-            </div>
-            <div id="right">
-               <img src="images/download.jpg" width="100%" height="35%"  alt="img">
-                
-                <br>
-            </div>
-            <a href="/register" >View All</a>
+            <% for(var i = 0;i<3;i++){%>
+
+ <div id="ind">
+ <div id="imgin">
+ <img src="images/<%-projectsArray[i].image%>" id="poi">
+ </div>
+ <div id="in">
+<div id="imgio">
+<center><a href="/description?id=<%-projectsArray[i]._id%>"><b><%-projectsArray[i].title%></a></center><br>
+<%-projectsArray[i].description%>
+</div>
+<br>
+<div id="imgip">
+<div id="pgbar">
+<div id="pgbarfill" style="width:<%= (projectsArray[i].fundscollected/projectsArray[i].funds)*100 %>%" ><br><br>
+</div></div></div>
+<div id="imgik">
+<div id="l1">Funded<br><%= ((projectsArray[i].fundscollected/projectsArray[i].funds)*100).toFixed(2) %>%</div>
+<div id="l2">Target<br><%-projectsArray[i].funds%> </div>
+<div id="l3">Deadline<br><%-projectsArray[i].deadline%></div>
+   
+
+ 
+ 
+</div>
+</div>
+</div>
+
+<%}%> 
+            
             
         </div><br><br><br><br><br><br>
 <hr>
 
 
-        <div id="down">
-            <h2>Success Stories</h2>
-            <div id="sidetop1"></div>
-            <div id="top1">a</div>
-            <div id="sidetop2"></div>
-            <div id="top2">b</div>
-            <div id="sidetop3"></div>
-            <div id="top3">c</div>
-            
-        </div>
-        <hr>
-
+        
 

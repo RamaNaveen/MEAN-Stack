@@ -1,0 +1,18 @@
+<%-contentFor('hero')%>
+
+<div id="succ">
+<h2 id="heading2">Success Stories</h2>
+<br><br>
+<% for(var i = 0;i<storiesArray.length;i++){%>
+
+<div id="su">
+<div id="sul">
+<img src="images/<%-storiesArray[i].image%>" id="poi">
+</div>
+<div id="sur">
+<center><a href="successDesc?id=<%-storiesArray[i]._id%>"><%-storiesArray[i].title%></a></center><br><br>
+<%-storiesArray[i].description%>
+</div>
+</div>
+<%}%>
+</dv>

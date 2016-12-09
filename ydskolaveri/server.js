@@ -23,25 +23,40 @@ var jobsArray = []
 var alreadyMessage = "";
 var message = "";
 var searchresults = "";
-var a,e,f
+var a,e,f,p
 var b
 var c
 var count = 0;
 var d
 var ObjectId = require('mongodb').ObjectID;
 var fund = 0;
-var email;
-
+var email = "";
+	var projectsArray = [];
+	var loginmessage = "";
 app.get('/', function(req,res){
+	projectsArray = [];
 	b = ""
 	c = ""
 	d = ""
 	a = "active";
 	e = "";
 	f = "";
-	res.render("home1",{a,b,c,d,e,f});
-	jobsArray = [];
-	searchresults = ""
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('projects').find({});
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					projectsArray.push(doc);
+				}
+			}, function(){
+				res.render('home1',{projectsArray,a,b,c,d,e,f,p,email})
+			});
+		}
+	});
 });
 
 app.get('/register',function(req,res){
@@ -50,8 +65,9 @@ app.get('/register',function(req,res){
 	d = ""
 	a = "";
 	e = "";
+	p="";
 	f = "active";
-	res.render('register',{alreadyMessage,a,b,c,d,e,f});
+	res.render('register',{alreadyMessage,a,b,c,d,e,f,p,email});
 	alreadyMessage = "";
 	//res.render('/register')
 });
@@ -63,12 +79,14 @@ app.get('/login',function(req,res){
 	e = "active";
 	a = "";
 	f = "";
-	console.log(message);
-	res.render("login",{message,a,b,c,d,e,f});
-	message = "";
+	p="";
+	email = ""
+	//loginmessage="username and password dosen't exists";
+	res.render("login",{loginmessage,a,b,c,d,e,f,p,email});
+	loginmessage = "";
 	//res.render('/register')
 });
-
+fpmessage = ""
 app.get('/forgotpassword',function(req,res){
 	b = ""
 	c = ""
@@ -76,17 +94,20 @@ app.get('/forgotpassword',function(req,res){
 	e = "active";
 	a = "";
 	f = "";
-	res.render("forgotpassword",{a,b,c,d,e,f,message});
-	message = "";
+	p="";
+
+	res.render("forgotpassword",{a,b,c,d,e,f,p,fpmessage,email});
+	fpmessage = "";
 });
 
 app.get('/FAQ',function(req,res){
 	b = ""
 	c = ""
 	a = ""
-	d = "active";
+	d = "";
 	e = "";
 	f = "";
+	p="active";
 	var faqArray = [];
 	mongoClient.connect(url,function(err,db){
 		if (err){
@@ -101,7 +122,8 @@ app.get('/FAQ',function(req,res){
 					faqArray.push(doc)
 				}
 			},function(){
-				res.render('FAQ',{faqArray,a,b,c,d,e,f});
+				res.render('FAQ',{faqArray,a,b,c,d,e,f,p,email});
+
 			});
 		}
 	});
@@ -116,6 +138,7 @@ app.get('/projects',function(req,res){
 	d = "";
 	e = "";
 	f = "";
+	p="";
 	mongoClient.connect(url,function(err,db){
 		if (err){
 			console.log("error");
@@ -128,28 +151,104 @@ app.get('/projects',function(req,res){
 					projectsArray.push(doc);
 				}
 			}, function(){
-				res.render('projects',{projectsArray,a,b,c,d,e,f})
+				res.render('projects',{projectsArray,a,b,c,d,e,f,p,email})
 			});
 		}
 	});
 });
+var storiesArray = [];
+app.get('/successProjects',function(req,res){
+	storiesArray = [];
+	b = "";
+	d = "active";
+	a = "";
+	c = "";
+	e = "";
+	f = "";
+	p="";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('stories').find({});
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					storiesArray.push(doc);
+				}
+			}, function(){
+				console.log(storiesArray);
+				res.render('successProjects',{storiesArray,a,b,c,d,e,f,p,email})
+			});
+		}
+	});
+});
+
+var removedprojectsArray = []
+var pendingprojectsArray = []
+var dashboardprojectsArray = []
 app.get('/dashboard',function(req,res){
+	removedprojectsArray = []
+	pendingprojectsArray = []
+	dashboardprojectsArray = []
 	b = "active";
 	c = "";
 	a = "";
 	d = "";
 	e = "";
 	f = "";
-	res.render('dashboard',{a,b,c,d,e,f})
+	p="";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('projects').find({status:"approved","email":email});
+			var cursor1 = db.collection('projects').find({status:"removed","email":email});
+			var cursor2 = db.collection('projects').find({status:"pending","email":email});
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					dashboardprojectsArray.push(doc);
+				}
+			},function(){
+				cursor1.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					removedprojectsArray.push(doc);
+				}
+				},function(){
+					cursor2.forEach(function(doc,err){
+						if(err){
+							console.log(err);
+						} else {
+							pendingprojectsArray.push(doc);
+						}
+						},function(){
+							res.render('dashboard',{dashboardprojectsArray,pendingprojectsArray,removedprojectsArray,a,b,c,d,e,f,p,email});
+						});
+
+				});
+
+
+
+				});
+			
+			}
+		
+	});
 });
 app.get('/startProject',function(req,res){
 	b = "";
-	c = "active";
+	d = "active";
 	a = "";
-	d = "";
+	c = "";
 	e = "";
 	f = "";
-	res.render('startProject',{a,b,c,d,e,f})
+	p="";
+	res.render('startProject',{a,b,c,d,e,f,p,email})
 });
 app.get('/userHome',function(req,res){
 	var projectsArray = [];
@@ -160,6 +259,8 @@ app.get('/userHome',function(req,res){
 	d = "";
 	e = "";
 	f = "";
+	p="";
+
 	mongoClient.connect(url,function(err,db){
 		if (err){
 			console.log("error");
@@ -172,7 +273,7 @@ app.get('/userHome',function(req,res){
 					projectsArray.push(doc);
 				}
 			}, function(){
-				res.render('userHome',{projectsArray,a,b,c,d,e,f})
+				res.render('userHome',{projectsArray,a,b,c,d,e,f,p,email})
 			});
 		}
 	});
@@ -186,6 +287,7 @@ app.get('/admin',function(req,res){
 	d = "";
 	e = "";
 	f = "";
+	p="";
 	mongoClient.connect(url,function(err,db){
 		if (err){
 			console.log("error");
@@ -198,36 +300,96 @@ app.get('/admin',function(req,res){
 					projectsArray.push(doc);
 				}
 			}, function(){
-				res.render('admin',{projectsArray,a,b,c,d,e,f})
+				res.render('admin',{projectsArray,a,b,c,d,e,f,p,email})
 			});
 		}
 	});
 });
-app.post('/creditdetails',function(req,res){
-
-	console.log(fund);
+app.post('/successMoney',function(req,res){
 	a= "active"
 	c = ""
-	a = ""
+	b = ""
 	d = "";
 	e = "";
-	f = "";
-	res.render('creditdetails',{a,b,c,d,e,f})
-});
-app.get('/description',function(req,res){
-	var projectdescr = []
-	var id = ObjectId(req.query.id);
-	b = "active";
-	c = "";
-	a = "";
-	d = "";
-	e = "";
+	p="";
 	f = "";
 	mongoClient.connect(url,function(err,db){
 		if (err){
 			console.log("error");
 		} else {
+			var x = parseInt(projectdescr[projectdescr.length-1].fundscollected)+parseInt(fund);
+			db.collection('projects').update({"_id":id},{$set:{fundscollected:x}});
+			message = "Transaction successfull";
+			res.render('successMoney',{message,a,b,c,d,e,f,p,email});
+			id="";
+			
+		}
+	});
+});
+	
+
+app.post('/creditdetails',function(req,res){
+
+	a= "active"
+	c = ""
+	a = ""
+	d = "";
+	e = "";
+	p="";
+	f = "";
+	res.render('creditdetails',{a,b,c,d,e,f,p,fund,email})
+});
+var id;
+var projectdescr = []
+var storiesdescr = []
+app.get('/successDesc',function(req,res){
+	id = ObjectId(req.query.id);
+
+	c = "active";
+	b = "";
+	a = "";
+	d = "";
+	e = "";
+	f = "";
+	p="";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
+			var cursor = db.collection('stories').find({"_id":id});
+			//db.collection('projects').update({"_id":id},{$set:{title:"abc"}})
+			cursor.forEach(function(doc,err){
+				if(err){
+					console.log(err);
+				} else {
+					storiesdescr.push(doc);
+				}
+			}, function(){
+				
+				res.render('successDescription',{storiesdescr,email,a,b,c,d,e,f,p});
+				
+				
+			});
+		}
+	});
+});
+app.get('/description',function(req,res){
+	
+	id = ObjectId(req.query.id);
+
+	a = "active";
+	c = "";
+	b = "";
+	d = "";
+	e = "";
+	f = "";
+	p="";
+	mongoClient.connect(url,function(err,db){
+		if (err){
+			console.log("error");
+		} else {
 			var cursor = db.collection('projects').find({"_id":id});
+			//db.collection('projects').update({"_id":id},{$set:{title:"abc"}})
 			cursor.forEach(function(doc,err){
 				if(err){
 					console.log(err);
@@ -235,8 +397,12 @@ app.get('/description',function(req,res){
 					projectdescr.push(doc);
 				}
 			}, function(){
-				console.log(projectdescr)
-				res.render('description',{projectdescr,a,b,c,d,e,f})
+				if (email == "admin@yourcontribution.com"){
+					res.render('admindescription',{projectdescr,email,a,b,c,d,e,f,p});
+				} else {
+					res.render('description',{projectdescr,email,a,b,c,d,e,f,p});
+				}
+				
 			});
 		}
 	});
@@ -245,13 +411,15 @@ app.get('/addSuccessStories',function(req,res){
 	b = "active";
 	c = "";
 	a = "";
-	res.render('addSuccessStories',{a,b,c,d,e,f})
+	p="";
+	res.render('addSuccessStories',{a,b,c,d,e,f,p,email})
 });
 app.get('/successStories',function(req,res){
 	b = "active";
 	c = "";
 	a = "";
-	res.render('successStories',{a,b,c,d,e,f})
+	p="";
+	res.render('successStories',{a,b,c,d,e,f,p,email})
 });
 app.post('/jobSearch',function(req,res){
 
@@ -326,6 +494,9 @@ app.post('/jobSearch',function(req,res){
 
 });
 
+
+
+
 app.post('/startProjects',upload.single('image'),function(req,res){
 	var myfile = req.file;
 	var project = {
@@ -342,8 +513,10 @@ app.post('/startProjects',upload.single('image'),function(req,res){
 		about:req.body.about,
 		status:'pending',
 		fundscollected:0,
-		image:JSON.stringify(req.file),
+		image:req.body.image,
+		email:email
 	};
+	console.log(req.body.image);
 	mongoClient.connect(url,function(err,db){
 		if (err){
 			console.log("Error in establishing connection");
@@ -354,13 +527,15 @@ app.post('/startProjects',upload.single('image'),function(req,res){
 					console.log('error');
 				} else {
 					console.log(req.files);
-					res.render('successProject',{a,b,c,d,e,f})
+					res.render('successProject',{a,b,c,d,e,f,p,email})
 				}
 			});
 		}
 	});
 
 });
+
+
 
 app.post('/addSuccessStories',upload.single('image'),function(req,res){
 	a=""
@@ -369,10 +544,12 @@ app.post('/addSuccessStories',upload.single('image'),function(req,res){
 	d=""
 	e=""
 	f=""
+	p="";
 	var story = {
 		title:req.body.title,
 		description:req.body.description,
-		about:req.body.about
+		about:req.body.about,
+		image:req.body.image
 	};
 	mongoClient.connect(url,function(err,db){
 		if (err){
@@ -383,21 +560,45 @@ app.post('/addSuccessStories',upload.single('image'),function(req,res){
 				if(err){
 					console.log('error');
 				} else {
-					console.log("req.files");
-					res.render('sucessStories',{a,b,c,d,e,f})
+					res.render('sucessStories',{a,b,c,d,e,f,p,email})
 				}
 			});
 		}
 	});
 
 });
+app.post('/admindescription',function(req,res){
+	mongoClient.connect(url,function(err,db){
+		if(err){
+			console.log("error");
+		} else {
+			db.collection('projects').update({"_id":id},{$set:{status:"approved"}});
+			//window.alert("Project Approved successfully");
+			res.render('approved',{a,b,c,d,e,f,p,email});
+		}
+	});
+});
+app.post('/adminreject',function(req,res){
+	mongoClient.connect(url,function(err,db){
+		if(err){
+			console.log("error");
+		} else {
+			db.collection('projects').update({"_id":id},{$set:{status:"removed"}});
+			//window.alert("Project Removed successfully");
+			res.render('removed',{a,b,c,d,e,f,p,email});
+		}
+	});
+});
+
 
 app.post('/login',function(req,res){
+	email = req.body.username;
 	var login = {email:req.body.username,
 		password : req.body.password
 	};
+
 	if (req.body.username == "admin@yourcontribution.com" && req.body.password == "admin"){
-		res.redirect('/admin')
+		res.redirect('/admin?status=pending')
 	} else {
 
 	mongoClient.connect(url,function(err,db){
@@ -421,7 +622,7 @@ app.post('/login',function(req,res){
 						res.redirect('/userHome?category=arts')
 					} else {
 						console.log(count);
-						message = "username and password is wrong";
+						loginmessage="username and password are wrong";
 
 						res.redirect('/login');
 					}
@@ -463,7 +664,7 @@ app.post('/register',function(req,res){
 							console.log('Item Inserted');
 							message="You are registered with "+newUser.email+" successfully";
 							 f="active";
-					res.render('success',{message,a,b,c,d,e,f});
+					res.render('success',{message,a,b,c,d,e,f,p,email});
 					message="";
 						
 						}
@@ -484,15 +685,33 @@ app.post('/register',function(req,res){
 	
 });
 
+email = ""
 app.post('/description',function(req,res){
-	b = "active";
+
+	b = "";
 	c = "";
-	a = "";
+	a = "active";
 	d = "";
 	e = "";
 	f = "";
+	p="";
 	fund = req.body.fund;
-	res.render('confirmfunding',{fund,a,b,c,d,e,f})
+
+	
+if(email != ""){
+		res.render('confirmfunding',{fund,a,b,c,d,e,f,p,email});
+		
+	} else{
+		b = "";
+	c = "";
+	a = "";
+	d = "";
+	e = "active";
+	f = "";
+	p="";
+	res.render('login',{loginmessage,a,b,c,d,e,f,p,email});
+	loginmessage = ""
+}
 });
 
 app.post('/forgotpassword',function(req,res){
@@ -516,13 +735,13 @@ app.post('/forgotpassword',function(req,res){
 				}
 			},function(){
 				if (resultArray.length == 0) {
-					message = "Email doesn't exist";
+					fpmessage = "Email doesn't exist";
 					res.redirect('/forgotpassword');
 				} else {
 
 					message = "The password is sent to your email address";
 					e="active";
-					res.render('success',{message,a,b,c,d,e,f});
+					res.render('success',{message,a,b,c,d,e,f,p,email});
 					message = "";
 				}
 				//res.send("Recieved data");
@@ -534,6 +753,7 @@ app.post('/forgotpassword',function(req,res){
 		}
 	});
 });
+
 
 app.listen(3000);
 console.log('Running on port 3000');
