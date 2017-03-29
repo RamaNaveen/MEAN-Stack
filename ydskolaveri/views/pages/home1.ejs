@@ -24,14 +24,15 @@ and open the template in the editor.
         <div id="inds" >
         <h2>Top Projects</h2>
         
-            <% for(var i = 0;i<3;i++){%>
-
+             <% for(var i = 0;i<projectsArray.length;i++){%>
+<%if(i<3){%>
  <div id="ind">
  <div id="imgin">
  <img src="images/<%-projectsArray[i].image%>" id="poi">
  </div>
  <div id="in">
 <div id="imgio">
+<%-projectsArray[i]%>
 <center><a href="/description?id=<%-projectsArray[i]._id%>"><b><%-projectsArray[i].title%></a></center><br>
 <%-projectsArray[i].description%>
 </div>
@@ -51,7 +52,7 @@ and open the template in the editor.
 </div>
 </div>
 </div>
-
+<%}%>
 <%}%> 
             
             
