@@ -1,0 +1,27 @@
+
+<%-contentFor('herohead')%>
+
+<title>Login</title>
+
+<%-contentFor('hero')%>
+
+<div id="login">
+<div id= "login1">
+
+
+<form method="POST" action="/login">
+<h1><span id="heading">Log In</h1>
+<span id="error"><%= loginmessage %></span>
+
+                   <input type="text" name="username" id="uname" placeholder="Email" required>
+                <br>
+                    <input type="password" name="password" id="pass" placeholder="Password" required>
+                <br>
+                <a href="/forgotpassword" id="fp">Forgot password?</a>
+                    <input type="submit" value = "Log me in!" id="lgnBTN">
+                
+</form>
+<hr>
+<span id="heading1">New to Your Contribution please?</span><br> <a href="/register" id="heading2">Sign Up</a>
+</div>
+</div>

@@ -1,0 +1,16 @@
+<%-contentFor('hero')%>
+<div id="login1">
+<form method="POST" action="/register">
+
+<h1><span id="heading3">Register</h1>
+<span id="error"><%= alreadyMessage %></span>
+	<input type="text" name="username" id="uname" placeholder="Name" required>
+	<input type="email" name = "email" id="uname" placeholder="Email" required>
+	<input type="Password" name="password" id="uname" placeholder="Password" required>
+	<input type="Password" name="re-enterpassword" id="uname" placeholder="Re-enter Password" required>
+	
+<input type="submit" value="Register" id="lgnBTN">
+</form>
+
+<span id="heading">Have an account? </span><br> <a href="/login" id="heading2">Log In</a>
+</div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<%-contentFor('hero')%>
+        <div id="asd">
+<!--        <div id="quote">
+            <h3>We make a living by</h3><h1> what we get </h1><h3>but we make a life by </h3><h1>what we give</h1>
+        </div> -->   
+        </div>
+        <div id="ab">
+            <div id="about">
+            Crowdfunding is the practice of funding a project or venture by raising monetary contributions from a large number of people. Crowdfunding can replace the need for specialized grant applications or other more formal and traditional fundraising techniques with that of a more casual, yet powerful, approach based on crowd participation. However, the Internet can provide new streamlined approaches to quickly imitating the co-op model for low-level and/or sudden needs (ie. disaster relief, travel expenses, legal fees and so on.). It is this reason that a term be used to encompass the act of informally generating and distributing funds, usually online, by groups of people for specific social, personal, entertainment or other purposes.
+            </div>
+            <div id="csimg">
+                <img src="images/crowdfunding.jpg" id="cfimg" align="right">
+            </div>
+        
+        </div>
+        <br>
+        <hr>
+        <div id="inds" >
+        <h2>Top Projects</h2>
+        
+             <% for(var i = 0;i<projectsArray.length;i++){%>
+<%if(i<3){%>
+ <div id="ind">
+ <div id="imgin">
+ <img src="images/<%-projectsArray[i].image%>" id="poi">
+ </div>
+ <div id="in">
+<div id="imgio">
+<%-projectsArray[i]%>
+<center><a href="/description?id=<%-projectsArray[i]._id%>"><b><%-projectsArray[i].title%></a></center><br>
+<%-projectsArray[i].description%>
+</div>
+<br>
+<div id="imgip">
+<div id="pgbar">
+<div id="pgbarfill" style="width:<%= (projectsArray[i].fundscollected/projectsArray[i].funds)*100 %>%" ><br><br>
+</div></div></div>
+<div id="imgik">
+<div id="l1">Funded<br><%= ((projectsArray[i].fundscollected/projectsArray[i].funds)*100).toFixed(2) %>%</div>
+<div id="l2">Target<br><%-projectsArray[i].funds%> </div>
+<div id="l3">Deadline<br><%-projectsArray[i].deadline%></div>
+   
+
+ 
+ 
+</div>
+</div>
+</div>
+<%}%>
+<%}%> 
+            
+            
+        </div><br><br><br><br><br><br>
+<hr>
+
+
+        
+

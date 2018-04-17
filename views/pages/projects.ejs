@@ -1,0 +1,60 @@
+<%-contentFor('hero')%>
+<div id="cat">
+<div id="cats">
+<ul>
+<li><a href="/projects?category=arts">Arts</a></li>
+<li><a href="/projects?category=Comics">Comics</a></li>
+<li><a href="/projects?category=Crafts">Crafts</a></li>
+<li><a href="/projects?category=Dance">Dance</a></li>
+<li><a href="/projects?category=Design">Design</a></li>
+<li><a href="/projects?category=Fashion">Fashion</a></li>
+<li><a href="/projects?category=Film & Video">Film & Video</a></li>
+<li><a href="/projects?category=Food">Food</a></li>
+<li><a href="/projects?category=Games">Games</a></li>
+<li><a href="/projects?category=Journalism">Journalism</a></li>
+<li><a href="/projects?category=Music">Music</a></li>
+<li><a href="/projects?category=Photography">Photography</a></li>
+<li><a href="/projects?category=Publishing">Publishing</a></li>
+<li><a href="/projects?category=Technology">Technology</a></li>
+<li><a href="/projects?category=Theater">Theater</a></li>
+</ul>
+</div>
+</div>
+<div id=inds>
+<%if (projectsArray.length == 0){ %>{
+<div id="success">
+
+  <h1>There are no projects to show</h1>
+
+  </div>
+<%}%> 
+<% for(var i = 0;i<projectsArray.length;i++){%>
+
+ <div id="ind">
+ <div id="imgin">
+ <img src="images/<%-projectsArray[i].image%>" id="poi">
+ </div>
+ <div id="in">
+<div id="imgio">
+<center><a href="/description?id=<%-projectsArray[i]._id%>"><b><%-projectsArray[i].title%></a></center><br>
+<%-projectsArray[i].description%>
+</div>
+<br>
+<div id="imgip">
+<div id="pgbar">
+<div id="pgbarfill" style="width:<%= (projectsArray[i].fundscollected/projectsArray[i].funds)*100 %>%" ><br><br>
+</div></div></div>
+<div id="imgik">
+<div id="l1">Funded<br><%= ((projectsArray[i].fundscollected/projectsArray[i].funds)*100).toFixed(2) %>%</div>
+<div id="l2">Target<br><%-projectsArray[i].funds%> </div>
+<div id="l3">Deadline<br><%-projectsArray[i].deadline%></div>
+   
+
+ 
+ 
+</div>
+</div>
+</div>
+
+<%}%> 
+</div>
