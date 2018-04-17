@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("naveensoftrams/hellonode")
+        app = docker.build("naveensoftrams/Testnode")
     }
 
     stage('Test image') {
